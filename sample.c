@@ -14,9 +14,9 @@ int main(int argc, char** argv) {
     }
     struct stat st;
     if (stat(argv[1], &st) == 0) {
-        printf("Size of %s: %lld bytes\n", argv[1], (long long) st.st_size);
+        printf("%ld\n", st.st_size);
     } else {
-        perror("stat");
+        perror("Error accessing file\n");
         return -1;
     }
 }
