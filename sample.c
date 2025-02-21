@@ -1,5 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <sys/stat.h>
+#include <string.h>
     
 #define BUFSIZE 256
     
@@ -10,7 +12,11 @@ int main(int argc, char** argv) {
         fprintf(stderr, "Please provide the address of a file as an input.\n");
         return -1;
     }
-    char cmd[BUFSIZE];
-    snprintf(cmd, BUFSIZE, "wc -c < %s", argv[1]);
-    system(cmd);
+    struct stat st;
+    if (stat(argv[1], &st) == 0) {
+        printf("%ld\n", st.st_size);
+    } else {
+        perror("Error accessing file\n");
+        return -1;
+    }
 }
